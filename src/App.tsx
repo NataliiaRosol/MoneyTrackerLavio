@@ -1,4 +1,5 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { GuestOnly, RequireAuth } from './features/auth'
 import AuthLayout from './pages/auth/AuthLayout'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
@@ -11,27 +12,34 @@ import TransactionsPage from './pages/TransactionsPage'
 import CategoriesPage from './pages/CategoriesPage'
 import InvitationsPage from './pages/InvitationsPage'
 import SettingsPage from './pages/SettingsPage'
+import HomePage from './pages/HomePage'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route element={<GuestOnly />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          </Route>
           <Route path="/verify-email" element={<VerifyEmailPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/invite" element={<InvitePage />} />
         </Route>
 
-        <Route path="/accounts" element={<AccountsPage />} />
-        <Route path="/transactions" element={<TransactionsPage />} />
-        <Route path="/categories" element={<CategoriesPage />} />
-        <Route path="/invitations" element={<InvitationsPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route element={<RequireAuth />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/accounts" element={<AccountsPage />} />
+          <Route path="/transactions" element={<TransactionsPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/invitations" element={<InvitationsPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+        </Route>
 
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   )

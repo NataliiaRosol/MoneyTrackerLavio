@@ -45,7 +45,7 @@ function AuthLayout() {
           Lavio
         </Text>
 
-        <div className="w-full max-w-sm">
+        <div className="w-full max-w-md">
           <Outlet />
         </div>
       </main>
