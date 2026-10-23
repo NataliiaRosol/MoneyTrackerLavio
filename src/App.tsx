@@ -7,6 +7,7 @@ import VerifyEmailPage from './pages/auth/VerifyEmailPage'
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
 import ResetPasswordPage from './pages/auth/ResetPasswordPage'
 import InvitePage from './pages/auth/InvitePage'
+import AppLayout from './pages/AppLayout'
 import AccountsPage from './pages/AccountsPage'
 import TransactionsPage from './pages/TransactionsPage'
 import CategoriesPage from './pages/CategoriesPage'
@@ -31,12 +32,14 @@ function App() {
         </Route>
 
         <Route element={<RequireAuth />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/accounts" element={<AccountsPage />} />
-          <Route path="/transactions" element={<TransactionsPage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/invitations" element={<InvitationsPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/accounts" element={<AccountsPage />} />
+            <Route path="/transactions" element={<TransactionsPage />} />
+            <Route path="/categories" element={<CategoriesPage />} />
+            <Route path="/invitations" element={<InvitationsPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />

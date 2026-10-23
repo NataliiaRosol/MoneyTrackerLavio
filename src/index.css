@@ -17,6 +17,8 @@
   --text-14--line-height: calc(1.25 / 0.875);
   --text-16: 1rem;
   --text-16--line-height: calc(1.5 / 1);
+  --text-28: 1.75rem;
+  --text-28--line-height: calc(2.25 / 1.75);
   --text-30: 1.875rem;
   --text-30--line-height: calc(2.25 / 1.875);
   --text-44: 2.75rem;

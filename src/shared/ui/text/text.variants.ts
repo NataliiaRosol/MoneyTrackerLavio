@@ -17,6 +17,7 @@ const textVariants = cva("", {
       xs: "text-12",
       sm: "text-14",
       base: "text-16",
+      lg: "text-28",
       xl: "text-30",
       display: "text-44",
     },
