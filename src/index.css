@@ -37,6 +37,8 @@
   --color-peach: #e8b6a5;
   --color-cream: #fbf4e7;
   --color-teal: #398c74;
+  --color-lavender: #d8c8ee;
+  --color-plum: #372652;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -54,6 +56,8 @@
     --color-peach: #e3a98f;
     --color-cream: #2a2620;
     --color-teal: #4fc79f;
+    --color-lavender: #3d3159;
+    --color-plum: #e6dcf7;
   }
 }
 

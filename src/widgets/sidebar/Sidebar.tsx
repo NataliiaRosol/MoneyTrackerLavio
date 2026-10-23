@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Text } from "@/shared/ui";
-import { NAV_ITEMS } from "./sidebar.constants";
+import { NAV_ITEMS } from "@/shared/config";
 
 function Sidebar() {
   return (
-    <aside className="sticky top-0 flex h-dvh w-60 shrink-0 flex-col border-r border-surface bg-white px-5 pt-8">
+    <aside className="sticky top-0 flex h-dvh w-56 shrink-0 flex-col border-r border-surface bg-white px-5 pt-8 shadow-[1px_0_6px_rgb(39_35_57/0.04)]">
       <Text as="span" size="lg" weight="bold" color="primary">
         Lavio
       </Text>
