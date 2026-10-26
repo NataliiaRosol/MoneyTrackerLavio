@@ -1,7 +1,13 @@
+import { InfoNote, PageHeader } from "@/shared/ui"
+
 function CategoriesPage() {
   return (
     <div>
-      <h1>Categories</h1>
+      <PageHeader title="Категорії" subtitle="Додайте власний зміст до щоденних витрат і доходів." actionText="+ Створити категорію" />
+
+      <InfoNote className="mx-10 ">Ваші категорії бачать учасники ваших спільних рахунків</InfoNote>
+
+      
     </div>
   )
 }

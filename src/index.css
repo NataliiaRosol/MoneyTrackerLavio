@@ -13,10 +13,14 @@
 
   --text-12: 0.75rem;
   --text-12--line-height: calc(1 / 0.75);
+  --text-13: 0.8125rem;
+  --text-13--line-height: calc(1.125 / 0.8125);
   --text-14: 0.875rem;
   --text-14--line-height: calc(1.25 / 0.875);
   --text-16: 1rem;
   --text-16--line-height: calc(1.5 / 1);
+  --text-22: 1.375rem;
+  --text-22--line-height: calc(1.75 / 1.375);
   --text-28: 1.75rem;
   --text-28--line-height: calc(2.25 / 1.75);
   --text-30: 1.875rem;
@@ -39,6 +43,7 @@
   --color-teal: #398c74;
   --color-lavender: #d8c8ee;
   --color-plum: #372652;
+  --color-canvas: #f7f7fb;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -58,6 +63,7 @@
     --color-teal: #4fc79f;
     --color-lavender: #3d3159;
     --color-plum: #e6dcf7;
+    --color-canvas: #100d18;
   }
 }
 
