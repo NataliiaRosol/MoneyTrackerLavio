@@ -8,6 +8,7 @@ const buttonVariants = cva(
         default: "border border-surface bg-white text-primary hover:bg-surface/40",
         active: "bg-violet text-white hover:bg-violet/90",
         cancel: "bg-rose-pale text-rose hover:bg-rose-pale/70",
+        ghost: "hover:bg-surface/40",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

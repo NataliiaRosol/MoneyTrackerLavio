@@ -12,6 +12,8 @@ const modalVariants = {
 type ModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  // викликається після завершення анімації відкриття/закриття
+  onOpenChangeComplete?: (open: boolean) => void;
   variant?: keyof typeof modalVariants;
   title: ReactNode;
   description?: ReactNode;
@@ -28,6 +30,7 @@ type ModalProps = {
 function Modal({
   open,
   onOpenChange,
+  onOpenChangeComplete,
   variant = "default",
   title,
   description,
@@ -42,13 +45,19 @@ function Modal({
   const styles = modalVariants[variant];
 
   return (
-    <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
+    <DialogPrimitive.Root
+      open={open}
+      onOpenChange={onOpenChange}
+      onOpenChangeComplete={onOpenChangeComplete}
+    >
       <DialogPrimitive.Portal>
         <DialogPrimitive.Backdrop className="fixed inset-0 z-50 bg-[rgb(39_35_57/0.4)] duration-150 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0" />
         <DialogPrimitive.Popup
           data-slot="modal"
           className={cn(
             "fixed top-1/2 left-1/2 z-50 flex w-130 max-w-[calc(100%-2rem)] -translate-1/2 flex-col gap-6 rounded-2xl bg-white p-8 outline-none duration-150 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            // вкладена модалка не малює свій бекдроп, тому затемнюємо батьківську самі
+            "data-nested-dialog-open:after:absolute data-nested-dialog-open:after:inset-0 data-nested-dialog-open:after:rounded-[inherit] data-nested-dialog-open:after:bg-[rgb(39_35_57/0.4)]",
             className,
           )}
         >
