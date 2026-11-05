@@ -1,5 +1,5 @@
 import { api, type ApiResponse } from "@/shared/api";
-import type { CategoryIconName } from "./categories.icons";
+import type { IconName } from "@/shared/icons";
 
 // дзеркало enum CategoryType з бекенду
 export const CATEGORY_TYPES = ["EXPENSE", "INCOME"] as const;
@@ -22,14 +22,14 @@ export type Category = {
 export type CreateCategoryInput = {
   name: string;
   type: CategoryType;
-  icon?: CategoryIconName;
+  icon?: IconName;
   color?: string;
 };
 
 // тип категорії бекенд змінювати не дає
 export type UpdateCategoryInput = {
   name?: string;
-  icon?: CategoryIconName | null;
+  icon?: IconName | null;
   color?: string | null;
 };
 

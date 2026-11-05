@@ -13,13 +13,6 @@ export {
   useDeleteCategory,
   useUpdateCategory,
 } from "./categories.hooks";
-export {
-  CATEGORY_ICON_NAMES,
-  CATEGORY_ICONS,
-  getCategoryIcon,
-  isCategoryIconName,
-} from "./categories.icons";
-export type { CategoryIconName } from "./categories.icons";
 export { CategoryIcon } from "./CategoryIcon";
 export { CategoryIconPicker } from "./CategoryIconPicker";
 export { CategoryItem } from "./CategoryItem";

@@ -69,8 +69,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-// дзеркало CATEGORY_ICONS з бекенду: ключ — назва іконки lucide в kebab-case
-const CATEGORY_ICONS = {
+// дзеркало CATEGORY_ICONS з бекенду: ключ — назва іконки lucide в kebab-case.
+// категорії бекенд перевіряє за цим списком, рахунки приймають будь-який рядок, але беруть той самий набір
+const ICONS = {
   // Їжа
   "shopping-cart": ShoppingCart,
   utensils: Utensils,
@@ -151,17 +152,17 @@ const CATEGORY_ICONS = {
   "circle-ellipsis": CircleEllipsis,
 } satisfies Record<string, LucideIcon>;
 
-type CategoryIconName = keyof typeof CATEGORY_ICONS;
+type IconName = keyof typeof ICONS;
 
-const CATEGORY_ICON_NAMES = Object.keys(CATEGORY_ICONS) as CategoryIconName[];
+const ICON_NAMES = Object.keys(ICONS) as IconName[];
 
-function isCategoryIconName(name: string): name is CategoryIconName {
-  return Object.hasOwn(CATEGORY_ICONS, name);
+function isIconName(name: string): name is IconName {
+  return Object.hasOwn(ICONS, name);
 }
 
-function getCategoryIcon(name: string | null): LucideIcon {
-  return name && isCategoryIconName(name) ? CATEGORY_ICONS[name] : CircleEllipsis;
+function getIcon(name: string | null): LucideIcon {
+  return name && isIconName(name) ? ICONS[name] : CircleEllipsis;
 }
 
-export { CATEGORY_ICON_NAMES, CATEGORY_ICONS, getCategoryIcon, isCategoryIconName };
-export type { CategoryIconName };
+export { ICON_NAMES, ICONS, getIcon, isIconName };
+export type { IconName };

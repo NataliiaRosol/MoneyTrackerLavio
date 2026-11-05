@@ -2,6 +2,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { getApiErrorCode, getErrorMessage } from "@/shared/api";
+import { ICON_NAMES, isIconName } from "@/shared/icons";
 import {
   Field,
   FieldDescription,
@@ -14,7 +15,6 @@ import {
 import { CATEGORY_TYPES, type Category } from "./categories.api";
 import { CATEGORY_TYPE_LABELS } from "./categories.constants";
 import { useCreateCategory, useUpdateCategory } from "./categories.hooks";
-import { CATEGORY_ICON_NAMES, isCategoryIconName } from "./categories.icons";
 import { CategoryIconPicker } from "./CategoryIconPicker";
 
 const FORM_ID = "category-form";
@@ -26,7 +26,7 @@ const categorySchema = z.object({
     .min(1, "Введіть назву")
     .max(50, "Не більше 50 символів"),
   type: z.enum(CATEGORY_TYPES),
-  icon: z.enum(CATEGORY_ICON_NAMES).nullable(),
+  icon: z.enum(ICON_NAMES).nullable(),
 });
 
 type CategoryFormValues = z.infer<typeof categorySchema>;
@@ -41,7 +41,7 @@ function toFormValues(category: Category | null): CategoryFormValues {
     name: category?.name ?? "",
     type: category?.type ?? "EXPENSE",
     // у старих записах може бути іконка, якої вже немає в списку
-    icon: category?.icon && isCategoryIconName(category.icon) ? category.icon : null,
+    icon: category?.icon && isIconName(category.icon) ? category.icon : null,
   };
 }
 
