@@ -23,6 +23,6 @@ export type { CategoryIconName } from "./categories.icons";
 export { CategoryIcon } from "./CategoryIcon";
 export { CategoryIconPicker } from "./CategoryIconPicker";
 export { CategoryItem } from "./CategoryItem";
-export { CategoriesCard } from "./CategoriesCard";
+export { CategoriesGrid } from "./CategoriesGrid";
 export { CategoryFormModal } from "./CategoryFormModal";
 export { DeleteCategoryModal } from "./DeleteCategoryModal";

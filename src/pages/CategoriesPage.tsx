@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  CategoriesCard,
+  CategoriesGrid,
   CategoryFormModal,
   DeleteCategoryModal,
   useCategories,
@@ -15,12 +15,8 @@ function CategoriesPage() {
   const [formModal, setFormModal] = useState<CategoryModalState>({ open: false, category: null });
   const [deleteModal, setDeleteModal] = useState<CategoryModalState>({ open: false, category: null });
 
-  const systemCategories = categories?.filter((category) => category.isDefault);
-  const ownCategories = categories?.filter((category) => !category.isDefault);
-
   const openCreate = () => setFormModal({ open: true, category: null });
   const openEdit = (category: Category) => setFormModal({ open: true, category });
-  // категорію не скидаємо, щоб заголовок не змінився під час анімації закриття
   const onFormOpenChange = (open: boolean) => setFormModal((prev) => ({ ...prev, open }));
 
   const openDelete = (category: Category) => setDeleteModal({ open: true, category });
@@ -33,24 +29,12 @@ function CategoriesPage() {
       <div className="mx-10 mb-10 flex flex-col gap-5">
         <InfoNote>Ваші категорії бачать учасники ваших спільних рахунків</InfoNote>
 
-        <div className="grid items-start gap-5 lg:grid-cols-2">
-          <CategoriesCard
-            title="Системні"
-            description="Базові категорії доступні в кожному рахунку. Їх можна змінити або видалити."
-            categories={systemCategories}
-            emptyText="Системних категорій поки немає."
-            onEdit={openEdit}
-            onDelete={openDelete}
-          />
-          <CategoriesCard
-            title="Мої категорії"
-            description="Власні іконки й кольори. Лише ви можете керувати цими категоріями."
-            categories={ownCategories}
-            emptyText="Ви ще не створили жодної категорії."
-            onEdit={openEdit}
-            onDelete={openDelete}
-          />
-        </div>
+        <CategoriesGrid
+          categories={categories}
+          emptyText="Категорій поки немає. Створіть першу, щоб розподіляти витрати й доходи."
+          onEdit={openEdit}
+          onDelete={openDelete}
+        />
       </div>
 
       <CategoryFormModal
