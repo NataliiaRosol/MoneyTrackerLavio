@@ -55,13 +55,13 @@ function Modal({
         <DialogPrimitive.Popup
           data-slot="modal"
           className={cn(
-            "fixed top-1/2 left-1/2 z-50 flex w-130 max-w-[calc(100%-2rem)] -translate-1/2 flex-col gap-6 rounded-2xl bg-white p-8 outline-none duration-150 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            "fixed top-1/2 left-1/2 z-50 flex max-h-[calc(100dvh-2rem)] w-130 max-w-[calc(100%-2rem)] -translate-1/2 flex-col gap-6 rounded-2xl bg-white p-8 outline-none duration-150 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
             // вкладена модалка не малює свій бекдроп, тому затемнюємо батьківську самі
             "data-nested-dialog-open:after:absolute data-nested-dialog-open:after:inset-0 data-nested-dialog-open:after:rounded-[inherit] data-nested-dialog-open:after:bg-[rgb(39_35_57/0.4)]",
             className,
           )}
         >
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex shrink-0 items-start justify-between gap-4">
             <div className="flex flex-col gap-2">
               <DialogPrimitive.Title
                 className={cn("text-22 font-semibold", styles.title)}
@@ -84,9 +84,12 @@ function Modal({
             </DialogPrimitive.Close>
           </div>
 
-          {children}
+          {/* скролиться лише контент, шапка й кнопки лишаються на місці; -m-1 p-1 не дає overflow обрізати focus-ring */}
+          {children && (
+            <div className="-m-1 min-h-0 flex-1 overflow-y-auto p-1">{children}</div>
+          )}
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid shrink-0 grid-cols-2 gap-4">
             <DialogPrimitive.Close render={<Button className="h-11" />}>
               {cancelText}
             </DialogPrimitive.Close>

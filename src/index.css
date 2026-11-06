@@ -8,6 +8,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* менші екрани: вузьке вікно або невисокий ноутбук; у класах — compact:h-10, у CSS — @variant compact */
+@custom-variant compact {
+  @media (max-width: 1439px), (max-height: 860px) {
+    @slot;
+  }
+}
+
 @theme static {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
@@ -64,6 +71,18 @@
     --color-lavender: #3d3159;
     --color-plum: #e6dcf7;
     --color-canvas: #100d18;
+  }
+}
+
+:root {
+  @variant compact {
+    --spacing: 0.2rem;
+    --text-14: 0.8125rem;
+    --text-16: 0.9375rem;
+    --text-22: 1.25rem;
+    --text-28: 1.5rem;
+    --text-30: 1.625rem;
+    --text-44: 2.25rem;
   }
 }
 
@@ -185,8 +204,9 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+  /* text-16 замість дефолтних 16px браузера, щоб успадкований текст (інпути, значення селекту) теж стискався */
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-16;
   }
   html {
     @apply font-sans;
