@@ -3,6 +3,16 @@ import { useSession } from "./session.store";
 
 export type ApiResponse<T> = { success: true; data: T };
 
+export type PaginationMeta = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+};
+
+// списки з пагінацією: бекенд кладе meta поруч із data
+export type PaginatedResponse<T> = ApiResponse<T[]> & { meta: PaginationMeta };
+
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
