@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMe } from "@/features/auth";
 import { TransactionFormModal } from "@/features/transactions";
 import { PageHeader } from "@/shared/ui";
+import { MonthOverview } from "@/widgets/overview";
 import { RecentTransactions } from "@/widgets/transactions";
 
 function HomePage() {
@@ -12,13 +13,15 @@ function HomePage() {
   return (
     <div>
       <PageHeader
-        title={`Доброго дня, ${name}!`}
+        // поки юзер вантажиться, не показуємо «Доброго дня, !»
+        title={name ? `Доброго дня, ${name}!` : "Доброго дня!"}
         subtitle="Ваші фінанси в балансі. Ось що відбувається цього місяця."
         actionText="+ Додати транзакцію"
         onAction={() => setCreateOpen(true)}
       />
 
       <div className="mx-10 mb-10 flex flex-col gap-7.5">
+        <MonthOverview />
         <RecentTransactions />
       </div>
 

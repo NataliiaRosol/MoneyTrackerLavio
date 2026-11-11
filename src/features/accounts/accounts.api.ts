@@ -35,11 +35,21 @@ export type AccountDetails = Account & {
   monthExpense: string;
 };
 
-// сума власних рахунків з includeInTotal, переведена в базову валюту юзера за курсами НБУ
+// сума власних неархівних рахунків з includeInTotal, переведена в базову валюту юзера за курсами НБУ
 export type TotalBalance = {
   currency: Currency;
   total: string;
-  byCurrency: { currency: Currency; balance: string }[];
+  // обороти за поточний місяць (UTC), теж у базовій валюті
+  monthIncome: string;
+  monthExpense: string;
+  // скільки рахунків увійшло в total
+  accountsCount: number;
+  byCurrency: {
+    currency: Currency;
+    balance: string;
+    monthIncome: string;
+    monthExpense: string;
+  }[];
   // ціна 1 одиниці валюти в UAH, ті самі курси, за якими рахувався total
   rates: Record<Currency, string>;
   ratesDate: string;

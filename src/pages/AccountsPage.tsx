@@ -5,10 +5,10 @@ import {
   OwnBalanceNote,
   useAccounts,
 } from "@/features/accounts";
-import { PageHeader } from "@/shared/ui";
+import { Loader, PageHeader } from "@/shared/ui";
 
 function AccountsPage() {
-  const { data: accounts } = useAccounts();
+  const { data: accounts, isPending } = useAccounts();
   const [createOpen, setCreateOpen] = useState(false);
 
   return (
@@ -23,11 +23,15 @@ function AccountsPage() {
       <div className="mx-10 mb-10 flex flex-col gap-7.5">
         <OwnBalanceNote />
 
-        <AccountsSection
-          title="Мої"
-          accounts={accounts}
-          emptyText="Рахунків поки немає. Створіть перший, щоб почати відстежувати витрати й доходи."
-        />
+        {isPending ? (
+          <Loader />
+        ) : (
+          <AccountsSection
+            title="Мої"
+            accounts={accounts}
+            emptyText="Рахунків поки немає. Створіть перший, щоб почати відстежувати витрати й доходи."
+          />
+        )}
       </div>
 
       <CreateAccountModal open={createOpen} onOpenChange={setCreateOpen} />

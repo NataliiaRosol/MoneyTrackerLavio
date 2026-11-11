@@ -2,7 +2,15 @@ import { endOfMonth, endOfYear, startOfMonth, startOfYear, subDays, subMonths } 
 import { Search } from "lucide-react";
 import { useAccounts } from "@/features/accounts";
 import { CATEGORY_TYPES, useCategories, type CategoryType } from "@/features/categories";
-import { Button, Card, DateRangePicker, Input, Select, type DateRangePreset } from "@/shared/ui";
+import {
+  Button,
+  Card,
+  DateRangePicker,
+  Input,
+  SearchSelect,
+  Select,
+  type DateRangePreset,
+} from "@/shared/ui";
 import {
   AMOUNT_INPUT_PATTERN,
   EMPTY_TRANSACTION_FILTERS,
@@ -102,9 +110,11 @@ function TransactionFilters({ value, onChange }: TransactionFiltersProps) {
           onValueChange={(id) => update({ accountId: id && id !== ALL ? id : null })}
         />
 
-        <Select
+        <SearchSelect
           label="Категорія"
           items={categoryItems}
+          searchPlaceholder="Пошук категорії"
+          emptyText="Категорій з такою назвою немає"
           value={value.categoryId ?? ALL}
           onValueChange={(id) => update({ categoryId: id && id !== ALL ? id : null })}
         />

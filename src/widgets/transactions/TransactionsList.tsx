@@ -8,7 +8,7 @@ import {
   type TransactionSort,
 } from "@/features/transactions";
 import { pluralize } from "@/lib/format";
-import { Button, Select } from "@/shared/ui";
+import { Button, Loader, Select } from "@/shared/ui";
 import { TransactionsEmptyState } from "./TransactionsEmptyState";
 import { TransactionsTableCard } from "./TransactionsTableCard";
 
@@ -38,7 +38,7 @@ function TransactionsList({ filters, hasActiveFilters, onResetFilters }: Transac
     setPage(1);
   }
 
-  const { data, isPlaceholderData } = useTransactions({ ...filters, sort, page, limit: PAGE_SIZE });
+  const { data, isPending, isPlaceholderData } = useTransactions({ ...filters, sort, page, limit: PAGE_SIZE });
 
   const changeSort = (next: TransactionSort) => {
     setSort(next);
@@ -66,6 +66,9 @@ function TransactionsList({ filters, hasActiveFilters, onResetFilters }: Transac
           className="w-60"
         />
       </div>
+
+      {/* лише перше завантаження: при зміні фільтрів і сторінок keepPreviousData тримає попередні дані */}
+      {isPending && <Loader />}
 
       {data &&
         (data.meta.total > 0 ? (

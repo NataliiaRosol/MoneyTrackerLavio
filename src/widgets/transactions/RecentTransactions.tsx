@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTransactions } from "@/features/transactions";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/shared/ui";
+import { buttonVariants, Loader } from "@/shared/ui";
 import { TransactionsEmptyState } from "./TransactionsEmptyState";
 import { TransactionsTableCard } from "./TransactionsTableCard";
 
@@ -11,7 +11,7 @@ const PAGE_SIZE = 10;
 
 function RecentTransactions() {
   const [page, setPage] = useState(1);
-  const { data, isPlaceholderData } = useTransactions({ page, limit: PAGE_SIZE });
+  const { data, isPending, isPlaceholderData } = useTransactions({ page, limit: PAGE_SIZE });
 
   return (
     <section className="flex flex-col gap-4">
@@ -24,6 +24,9 @@ function RecentTransactions() {
           Усі транзакції →
         </Link>
       </div>
+
+      {/* лише перше завантаження: при зміні сторінки keepPreviousData тримає попередню */}
+      {isPending && <Loader />}
 
       {data &&
         (data.meta.total === 0 ? (

@@ -54,7 +54,7 @@ function Select<Value extends string>({
           className="z-50 outline-none"
         >
           <SelectPrimitive.Popup className="min-w-(--anchor-width) origin-(--transform-origin) rounded-[10px] border border-surface bg-white p-1 shadow-[0_4px_16px_rgb(39_35_57/0.08)] outline-none duration-150 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95">
-            <SelectPrimitive.List className="max-h-(--available-height) overflow-y-auto">
+            <SelectPrimitive.List className="max-h-[min(20rem,var(--available-height))] overflow-y-auto overscroll-contain">
               {items.map((item) => (
                 <SelectPrimitive.Item
                   key={item.value}

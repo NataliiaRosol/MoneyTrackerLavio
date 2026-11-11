@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useAccounts, type Account } from "@/features/accounts";
+import { useMe } from "@/features/auth";
 import {
   CATEGORY_TYPE_LABELS,
   CATEGORY_TYPES,
@@ -19,6 +20,7 @@ import {
   Form,
   Input,
   Modal,
+  SearchSelect,
   SegmentedControl,
   Select,
   Text,
@@ -74,13 +76,20 @@ function toAmountInput(amount: string): string {
   return `${whole},${fraction.replace(/0+$/, "").padEnd(2, "0")}`;
 }
 
-function toFormValues(transaction: Transaction | null, accounts: Account[]): TransactionFormInput {
+function toFormValues(
+  transaction: Transaction | null,
+  accounts: Account[],
+  defaultAccountId: string | null,
+): TransactionFormInput {
   if (!transaction) {
+    // рахунок за замовчуванням із налаштувань, якщо він є серед доступних
+    const defaultAccount = accounts.find(({ id }) => id === defaultAccountId) ?? accounts[0];
+
     return {
       type: "EXPENSE",
       amount: "",
       date: new Date(),
-      accountId: accounts[0]?.id ?? "",
+      accountId: defaultAccount?.id ?? "",
       categoryId: "",
       description: "",
     };
@@ -141,6 +150,7 @@ function TransactionFormModal({
   // архівні теж, бо транзакція, яку редагуємо, може бути саме на такому рахунку
   const { data: allAccounts } = useAccounts({ includeArchived: true });
   const { data: categories } = useCategories();
+  const { data: me } = useMe();
 
   // бекенд приймає транзакції лише на власні неархівні рахунки;
   // поточний рахунок транзакції лишаємо в списку, навіть якщо він уже в архіві
@@ -189,6 +199,7 @@ function TransactionFormModal({
           transaction={transaction}
           accounts={accounts}
           categories={categories}
+          defaultAccountId={me?.defaultAccountId ?? null}
           onSubmit={onSubmit}
         />
       ) : (
@@ -204,13 +215,20 @@ type TransactionFormProps = {
   transaction: Transaction | null;
   accounts: Account[];
   categories: Category[];
+  defaultAccountId: string | null;
   onSubmit: (values: TransactionFormValues) => Promise<void>;
 };
 
-function TransactionForm({ transaction, accounts, categories, onSubmit }: TransactionFormProps) {
+function TransactionForm({
+  transaction,
+  accounts,
+  categories,
+  defaultAccountId,
+  onSubmit,
+}: TransactionFormProps) {
   const form = useForm<TransactionFormInput, unknown, TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
-    defaultValues: toFormValues(transaction, accounts),
+    defaultValues: toFormValues(transaction, accounts, defaultAccountId),
   });
   const {
     register,
@@ -316,10 +334,12 @@ function TransactionForm({ transaction, accounts, categories, onSubmit }: Transa
             control={control}
             name="categoryId"
             render={({ field }) => (
-              <Select
+              <SearchSelect
                 label="Категорія"
                 items={categoryItems}
                 placeholder="Оберіть категорію"
+                searchPlaceholder="Пошук категорії"
+                emptyText="Категорій з такою назвою немає"
                 name={field.name}
                 value={field.value || null}
                 onValueChange={(value) => value && field.onChange(value)}

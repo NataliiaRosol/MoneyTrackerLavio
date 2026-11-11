@@ -8,6 +8,8 @@ export type User = {
   emailVerifiedAt: string | null;
   systemRole: "USER" | "ADMIN";
   baseCurrency: string;
+  // підставляється в нову транзакцію; null — не обрано
+  defaultAccountId: string | null;
   createdAt: string;
   updatedAt: string;
 };

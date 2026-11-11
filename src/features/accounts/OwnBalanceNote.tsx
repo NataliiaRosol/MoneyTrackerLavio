@@ -1,20 +1,6 @@
-import { formatMoney } from "@/lib/format";
+import { formatMoney, formatRates } from "@/lib/format";
 import { InfoNote } from "@/shared/ui";
-import type { TotalBalance } from "./accounts.api";
 import { useTotalBalance } from "./accounts.hooks";
-
-const rateFormat = new Intl.NumberFormat("uk-UA", {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
-
-// «1 USD = 41,20 UAH · 1 EUR = 45,00 UAH»; курси НБУ завжди відносно гривні
-function formatRates(rates: TotalBalance["rates"]): string {
-  return Object.entries(rates)
-    .filter(([currency]) => currency !== "UAH")
-    .map(([currency, rate]) => `1 ${currency} = ${rateFormat.format(Number(rate))} UAH`)
-    .join(" · ");
-}
 
 function OwnBalanceNote() {
   const { data, isError } = useTotalBalance();
