@@ -4,10 +4,11 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom'
-import { GuestOnly, RequireAuth } from './features/auth'
+import { GuestOnly, RequireAuth, UnverifiedOnly } from './features/auth'
 import AuthLayout from './pages/auth/AuthLayout'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
+import CheckEmailPage from './pages/auth/CheckEmailPage'
 import VerifyEmailPage from './pages/auth/VerifyEmailPage'
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
 import ResetPasswordPage from './pages/auth/ResetPasswordPage'
@@ -32,6 +33,10 @@ const router = createBrowserRouter(
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         </Route>
+        <Route element={<UnverifiedOnly />}>
+          <Route path="/check-email" element={<CheckEmailPage />} />
+        </Route>
+        {/* публічна: посилання з листа можуть відкрити на пристрої без сесії */}
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/invite" element={<InvitePage />} />

@@ -13,6 +13,7 @@ import {
   FieldError,
   Form,
   Input,
+  PasswordInput,
   Text,
 } from "@/shared/ui";
 
@@ -51,7 +52,8 @@ function RegisterPage() {
   } = form;
   const registration = useRegister();
 
-  // бекенд одразу створює сесію, тож після успіху GuestOnly перекине на головну (/)
+  // бекенд одразу створює сесію: GuestOnly перекине на головну (/),
+  // а звідти RequireAuth — на «Перевірте пошту», бо email ще не підтверджено
   const onSubmit = async ({ name, email, password }: RegisterValues) => {
     try {
       await registration.mutateAsync({ name, email, password });
@@ -100,9 +102,8 @@ function RegisterPage() {
         </Field>
 
         <Field data-invalid={!!errors.password}>
-          <Input
+          <PasswordInput
             label="Пароль"
-            type="password"
             autoComplete="new-password"
             placeholder="Створіть пароль"
             aria-invalid={!!errors.password}
@@ -113,9 +114,8 @@ function RegisterPage() {
         </Field>
 
         <Field data-invalid={!!errors.confirmPassword}>
-          <Input
+          <PasswordInput
             label="Повтор пароля"
-            type="password"
             autoComplete="new-password"
             placeholder="Повторіть пароль"
             aria-invalid={!!errors.confirmPassword}

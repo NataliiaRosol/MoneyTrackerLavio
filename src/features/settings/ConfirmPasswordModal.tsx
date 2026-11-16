@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { getApiErrorCode, getErrorMessage } from "@/shared/api";
-import { Field, FieldError, Form, Input, Modal } from "@/shared/ui";
+import { Field, FieldError, Form, Modal, PasswordInput } from "@/shared/ui";
 
 const FORM_ID = "confirm-password-form";
 
@@ -89,9 +89,8 @@ function ConfirmPasswordForm({ onConfirm, errorMessages }: ConfirmPasswordFormPr
   return (
     <Form id={FORM_ID} form={form} onSubmit={onSubmit} className="gap-5">
       <Field data-invalid={!!errors.currentPassword}>
-        <Input
+        <PasswordInput
           label="Поточний пароль"
-          type="password"
           autoComplete="current-password"
           placeholder="Введіть поточний пароль"
           aria-invalid={!!errors.currentPassword}

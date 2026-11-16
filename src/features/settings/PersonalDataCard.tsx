@@ -143,7 +143,7 @@ function PersonalDataCard({ user }: PersonalDataCardProps) {
         open={pendingValues !== null}
         onOpenChange={(open) => !open && setPendingValues(null)}
         title="Підтвердіть зміну email"
-        description="Щоб змінити email, введіть поточний пароль."
+        description="Щоб змінити email, введіть поточний пароль. Потім підтвердьте нову адресу за посиланням з листа."
         confirmText="Змінити email"
         pending={changeEmail.isPending || updateProfile.isPending}
         onConfirm={onConfirmPassword}

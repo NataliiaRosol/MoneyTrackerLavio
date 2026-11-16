@@ -12,6 +12,7 @@ import {
   FieldError,
   Form,
   Input,
+  PasswordInput,
   Text,
 } from "@/shared/ui";
 
@@ -79,9 +80,8 @@ function LoginPage() {
         </Field>
 
         <Field data-invalid={!!errors.password}>
-          <Input
+          <PasswordInput
             label="Пароль"
-            type="password"
             autoComplete="current-password"
             placeholder="Введіть пароль"
             aria-invalid={!!errors.password}

@@ -9,7 +9,7 @@ import {
   FieldDescription,
   FieldError,
   Form,
-  Input,
+  PasswordInput,
   Text,
 } from "@/shared/ui";
 import { ConfirmPasswordModal } from "./ConfirmPasswordModal";
@@ -75,9 +75,8 @@ function PasswordCard() {
         <div className="flex flex-col gap-2">
           <div className="grid gap-4 sm:grid-cols-2">
             <Field data-invalid={!!errors.newPassword}>
-              <Input
+              <PasswordInput
                 label="Пароль"
-                type="password"
                 autoComplete="new-password"
                 placeholder="Новий пароль"
                 aria-invalid={!!errors.newPassword}
@@ -88,9 +87,8 @@ function PasswordCard() {
             </Field>
 
             <Field data-invalid={!!errors.confirmPassword}>
-              <Input
+              <PasswordInput
                 label="Повтор пароля"
-                type="password"
                 autoComplete="new-password"
                 placeholder="Повторіть пароль"
                 aria-invalid={!!errors.confirmPassword}

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 import { Text } from "./text";
 
 type StatusScreenProps = {
@@ -10,21 +11,37 @@ type StatusScreenProps = {
   actions?: ReactNode;
   // додатковий блок між текстом і кнопками, напр. деталі помилки
   children?: ReactNode;
+  // дрібний текст під кнопками
+  footnote?: ReactNode;
+  // на весь екран з логотипом — коли немає жодного лейауту (404, глобальна помилка).
+  // false — всередині AuthLayout: логотип дає він, кнопки на всю ширину одна під одною, як у формах
+  fullScreen?: boolean;
 };
 
-// повноекранна заглушка для 404 і глобальної помилки
+// заглушка-статус: 404, глобальна помилка, екрани підтвердження пошти
 function StatusScreen({
   visual,
   title,
   description,
   actions,
   children,
+  footnote,
+  fullScreen = true,
 }: StatusScreenProps) {
+  const Root = fullScreen ? "main" : "div";
+
   return (
-    <main className="flex min-h-dvh w-full flex-col items-center justify-center bg-white px-6 py-12 text-center">
-      <Text as="span" size="xl" weight="bold" className="mb-8 text-primary">
-        Lavio
-      </Text>
+    <Root
+      className={cn(
+        "flex w-full flex-col items-center text-center",
+        fullScreen && "min-h-dvh justify-center bg-white px-6 py-12",
+      )}
+    >
+      {fullScreen && (
+        <Text as="span" size="xl" weight="bold" className="mb-8 text-primary">
+          Lavio
+        </Text>
+      )}
 
       {visual}
 
@@ -40,11 +57,24 @@ function StatusScreen({
       {children}
 
       {actions && (
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <div
+          className={cn(
+            "mt-8 flex gap-3",
+            fullScreen
+              ? "flex-wrap items-center justify-center"
+              : "w-full flex-col",
+          )}
+        >
           {actions}
         </div>
       )}
-    </main>
+
+      {footnote && (
+        <Text size="xs" className="mt-6 text-muted">
+          {footnote}
+        </Text>
+      )}
+    </Root>
   );
 }
 
