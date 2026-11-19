@@ -1,7 +1,7 @@
 import { endOfMonth, endOfYear, startOfMonth, startOfYear, subDays, subMonths } from "date-fns";
-import { Search } from "lucide-react";
 import { useAccounts } from "@/features/accounts";
 import { CATEGORY_TYPES, useCategories, type CategoryType } from "@/features/categories";
+import { cn } from "@/lib/utils";
 import {
   Button,
   Card,
@@ -42,9 +42,12 @@ function getPeriodPresets(today = new Date()): DateRangePreset[] {
 type TransactionFiltersProps = {
   value: TransactionFiltersValue;
   onChange: (value: TransactionFiltersValue) => void;
+  // "account" — сторінка одного рахунку: рахунок уже обрано, тож лише період, категорія, тип і пошук
+  variant?: "full" | "account";
 };
 
-function TransactionFilters({ value, onChange }: TransactionFiltersProps) {
+function TransactionFilters({ value, onChange, variant = "full" }: TransactionFiltersProps) {
+  const isFull = variant === "full";
   // архівні теж: їхні транзакції нікуди не зникають
   const { data: accounts = [] } = useAccounts({ includeArchived: true });
   const { data: categories = [] } = useCategories();
@@ -103,12 +106,14 @@ function TransactionFilters({ value, onChange }: TransactionFiltersProps) {
           presets={getPeriodPresets()}
         />
 
-        <Select
-          label="Рахунок"
-          items={accountItems}
-          value={value.accountId ?? ALL}
-          onValueChange={(id) => update({ accountId: id && id !== ALL ? id : null })}
-        />
+        {isFull && (
+          <Select
+            label="Рахунок"
+            items={accountItems}
+            value={value.accountId ?? ALL}
+            onValueChange={(id) => update({ accountId: id && id !== ALL ? id : null })}
+          />
+        )}
 
         <SearchSelect
           label="Категорія"
@@ -126,7 +131,8 @@ function TransactionFilters({ value, onChange }: TransactionFiltersProps) {
           onValueChange={(type) => changeType(CATEGORY_TYPES.find((t) => t === type) ?? null)}
         />
 
-        <div className="md:col-span-2">
+        {/* у повному варіанті пошук відкриває другий рядок разом із сумами, тож займає дві колонки */}
+        <div className={cn(isFull && "md:col-span-2")}>
           <Input
             label="Пошук"
             type="search"
@@ -134,27 +140,30 @@ function TransactionFilters({ value, onChange }: TransactionFiltersProps) {
             maxLength={100}
             value={value.search}
             onChange={(event) => update({ search: event.target.value })}
-            suffix={<Search className="size-4" />}
           />
         </div>
 
-        <Input
-          label="Сума від"
-          inputMode="decimal"
-          placeholder="0"
-          value={value.minAmount}
-          aria-invalid={amountInvalid || undefined}
-          onChange={(event) => changeAmount("minAmount", event.target.value)}
-        />
+        {isFull && (
+          <>
+            <Input
+              label="Сума від"
+              inputMode="decimal"
+              placeholder="0"
+              value={value.minAmount}
+              aria-invalid={amountInvalid || undefined}
+              onChange={(event) => changeAmount("minAmount", event.target.value)}
+            />
 
-        <Input
-          label="Сума до"
-          inputMode="decimal"
-          placeholder="Без обмежень"
-          value={value.maxAmount}
-          aria-invalid={amountInvalid || undefined}
-          onChange={(event) => changeAmount("maxAmount", event.target.value)}
-        />
+            <Input
+              label="Сума до"
+              inputMode="decimal"
+              placeholder="Без обмежень"
+              value={value.maxAmount}
+              aria-invalid={amountInvalid || undefined}
+              onChange={(event) => changeAmount("maxAmount", event.target.value)}
+            />
+          </>
+        )}
       </div>
 
       {amountInvalid && (

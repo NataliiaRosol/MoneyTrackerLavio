@@ -31,9 +31,14 @@ function formatLongDate(date: string): string {
 // month без day дає називний відмінок: «листопад», а не «листопада»
 const monthFormat = new Intl.DateTimeFormat("uk-UA", { month: "long", timeZone: "UTC" });
 
+// «листопад»; у UTC, бо бекенд рахує межі місяця в UTC
+function formatMonth(date: Date): string {
+  return monthFormat.format(date);
+}
+
 // «Листопад 2026»; у UTC, бо бекенд рахує межі місяця в UTC
 function formatMonthYear(date: Date): string {
-  const month = monthFormat.format(date);
+  const month = formatMonth(date);
   return `${month.charAt(0).toUpperCase()}${month.slice(1)} ${date.getUTCFullYear()}`;
 }
 
@@ -60,4 +65,12 @@ function pluralize(count: number, forms: PluralForms): string {
   return category === "one" || category === "few" ? forms[category] : forms.many;
 }
 
-export { formatDate, formatLongDate, formatMoney, formatMonthYear, formatRates, pluralize };
+export {
+  formatDate,
+  formatLongDate,
+  formatMoney,
+  formatMonth,
+  formatMonthYear,
+  formatRates,
+  pluralize,
+};

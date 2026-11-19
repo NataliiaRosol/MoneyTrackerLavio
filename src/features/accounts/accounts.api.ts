@@ -33,6 +33,8 @@ export type Account = {
 export type AccountDetails = Account & {
   monthIncome: string;
   monthExpense: string;
+  // поки транзакцій немає, валюту ще можна змінити
+  hasTransactions: boolean;
 };
 
 // сума власних неархівних рахунків з includeInTotal, переведена в базову валюту юзера за курсами НБУ
@@ -71,10 +73,11 @@ export type CreateAccountInput = {
   includeInTotal?: boolean;
 };
 
-// валюту бекенд змінювати не дає: транзакції вже в ній
 export type UpdateAccountInput = {
   name?: string;
   type?: AccountType;
+  // лише поки в рахунку немає транзакцій (вони вже в його валюті), інакше 409; ту саму валюту можна слати завжди
+  currency?: Currency;
   initialBalance?: string;
   icon?: string | null;
   color?: string | null;

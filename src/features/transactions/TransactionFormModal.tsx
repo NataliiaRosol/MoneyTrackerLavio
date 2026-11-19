@@ -135,6 +135,8 @@ type TransactionFormModalProps = {
   onOpenChange: (open: boolean) => void;
   // не передано — створення нової транзакції
   transaction?: Transaction | null;
+  // рахунок нової транзакції замість типового з налаштувань, напр. на сторінці рахунку
+  defaultAccountId?: string;
   // після успішного збереження, коли модалка вже закривається
   onSuccess?: () => void;
 };
@@ -143,6 +145,7 @@ function TransactionFormModal({
   open,
   onOpenChange,
   transaction = null,
+  defaultAccountId,
   onSuccess,
 }: TransactionFormModalProps) {
   const createTransaction = useCreateTransaction();
@@ -199,7 +202,7 @@ function TransactionFormModal({
           transaction={transaction}
           accounts={accounts}
           categories={categories}
-          defaultAccountId={me?.defaultAccountId ?? null}
+          defaultAccountId={defaultAccountId ?? me?.defaultAccountId ?? null}
           onSubmit={onSubmit}
         />
       ) : (

@@ -18,8 +18,10 @@ import {
 } from "@/shared/ui";
 import { CURRENCIES } from "./accounts.api";
 import {
+  ACCOUNT_NAME_CONFLICT_MESSAGE,
   ACCOUNT_TYPE_ICON_NAMES,
-  CURRENCY_LABELS,
+  accountNameSchema,
+  CURRENCY_ITEMS,
   getAccountTypeByIcon,
 } from "./accounts.constants";
 import { useCreateAccount } from "./accounts.hooks";
@@ -28,11 +30,7 @@ import { AccountIconPicker } from "./AccountIconPicker";
 const FORM_ID = "create-account-form";
 
 const accountSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(1, "Введіть назву")
-    .max(50, "Не більше 50 символів"),
+  name: accountNameSchema,
   icon: z.enum(ICON_NAMES),
   currency: z.enum(CURRENCIES),
   initialBalance: z
@@ -48,11 +46,6 @@ const accountSchema = z.object({
 
 type AccountFormInput = z.input<typeof accountSchema>;
 type AccountFormValues = z.output<typeof accountSchema>;
-
-const CURRENCY_ITEMS = CURRENCIES.map((currency) => ({
-  value: currency,
-  label: CURRENCY_LABELS[currency],
-}));
 
 const DEFAULT_VALUES: AccountFormInput = {
   name: "",
@@ -118,7 +111,7 @@ function CreateAccountForm({ onSubmit }: CreateAccountFormProps) {
       await onSubmit(values);
     } catch (error) {
       if (getApiErrorCode(error) === "CONFLICT") {
-        form.setError("name", { message: "Рахунок з такою назвою вже існує" });
+        form.setError("name", { message: ACCOUNT_NAME_CONFLICT_MESSAGE });
         return;
       }
       form.setError("root", { message: getErrorMessage(error) });

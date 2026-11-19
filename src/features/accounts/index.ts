@@ -32,3 +32,7 @@ export { AccountCard } from "./AccountCard";
 export { AccountsSection } from "./AccountsSection";
 export { OwnBalanceNote } from "./OwnBalanceNote";
 export { CreateAccountModal } from "./CreateAccountModal";
+export { AccountSettingsCard } from "./AccountSettingsCard";
+export type { AccountSettingsCardProps } from "./AccountSettingsCard";
+export { DeleteAccountCard } from "./DeleteAccountCard";
+export type { DeleteAccountCardProps } from "./DeleteAccountCard";

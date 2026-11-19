@@ -1,5 +1,5 @@
 import { Receipt, SearchX } from "lucide-react";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   TRANSACTION_SORT_LABELS,
   TRANSACTION_SORTS,
@@ -24,9 +24,16 @@ type TransactionsListProps = {
   filters: ListTransactionsParams;
   hasActiveFilters: boolean;
   onResetFilters: () => void;
+  // підказка, коли транзакцій немає зовсім (без фільтрів)
+  emptyDescription?: ReactNode;
 };
 
-function TransactionsList({ filters, hasActiveFilters, onResetFilters }: TransactionsListProps) {
+function TransactionsList({
+  filters,
+  hasActiveFilters,
+  onResetFilters,
+  emptyDescription = "Додайте першу витрату чи дохід, і тут зʼявляться всі транзакції з ваших рахунків.",
+}: TransactionsListProps) {
   const [sort, setSort] = useState<TransactionSort>("date_desc");
   const [page, setPage] = useState(1);
 
@@ -93,7 +100,7 @@ function TransactionsList({ filters, hasActiveFilters, onResetFilters }: Transac
           <TransactionsEmptyState
             icon={Receipt}
             title="Транзакцій ще немає"
-            description="Додайте першу витрату чи дохід, і тут зʼявляться всі транзакції з ваших рахунків."
+            description={emptyDescription}
           />
         ))}
     </section>

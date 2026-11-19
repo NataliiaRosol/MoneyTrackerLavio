@@ -15,6 +15,7 @@ import ResetPasswordPage from './pages/auth/ResetPasswordPage'
 import InvitePage from './pages/auth/InvitePage'
 import AppLayout from './pages/AppLayout'
 import AccountsPage from './pages/AccountsPage'
+import AccountDetailsPage from './pages/AccountDetailsPage'
 import TransactionsPage from './pages/TransactionsPage'
 import CategoriesPage from './pages/CategoriesPage'
 import InvitationsPage from './pages/InvitationsPage'
@@ -46,6 +47,7 @@ const router = createBrowserRouter(
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/accounts" element={<AccountsPage />} />
+          <Route path="/accounts/:accountId" element={<AccountDetailsPage />} />
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/invitations" element={<InvitationsPage />} />
